@@ -14,11 +14,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -26,13 +29,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.mastersid.toure.stackoverflow.R
+import fr.mastersid.toure.stackoverflow.composables.UpdateWeatherButton
 import fr.mastersid.toure.stackoverflow.ui.Question
+import fr.mastersid.toure.stackoverflow.viewmodel.QuestionsViewModel
 
-@SuppressLint("RememberReturnType")
 @Composable
 fun QuestionListScreen() {
 
-    val questionList = rememberSaveable {
+
+    var questionList : List<Question> by rememberSaveable {
         mutableStateOf(
             listOf(
                 Question(1, "Kotlin doesn't work", 3, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."),
@@ -50,8 +55,8 @@ fun QuestionListScreen() {
                 contentPadding = PaddingValues(16.dp)
 
             ){
-                items(questionList.value){ question ->
 
+                items(questionList){ question ->
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
@@ -80,31 +85,22 @@ fun QuestionListScreen() {
                             style = MaterialTheme.typography.displaySmall
                         )
                     }
-
-
-
-
                 }
-
             }
+         //   LinearProgressIndicator(modifier = Modifier.align(Alignment.Center))
 
-            Button(
-
-                onClick = {
-                    questionList.value = listOf(
-                        Question(1, "Question 1", 1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "),
-                        Question(2, "Question 2", 22, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "),
-                        Question(3, "Question 3", 12, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "),
-                        Question(4, "Question 4", 4, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "),
+            UpdateWeatherButton(
+                updateQuestion = {
+                //    Thread.sleep(2000)
+                    questionList = listOf(
+                        Question(11, "Kotlin doesn't work", 33, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."),
+                        Question(22, "short question", 1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."),
+                        Question(33, "A very very very very very very long question", 3, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."),
                     )
                 },
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .fillMaxWidth()
-                    .padding(16.dp)
-
-            ) {
-                Text(text = "update questions")
-            }
+                    .padding(bottom = 16.dp)
+            )
         }
 }
