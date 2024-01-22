@@ -19,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -28,24 +29,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import fr.mastersid.toure.stackoverflow.R
 import fr.mastersid.toure.stackoverflow.composables.UpdateWeatherButton
 import fr.mastersid.toure.stackoverflow.ui.Question
 import fr.mastersid.toure.stackoverflow.viewmodel.QuestionsViewModel
 
 @Composable
-fun QuestionListScreen() {
+fun QuestionListScreen(questionsViewModel: QuestionsViewModel = viewModel()) {
+    val questionList by questionsViewModel.questionsList.observeAsState(initial = emptyList())
+    val isLoading by questionsViewModel.isLoading.observeAsState(initial = false)
 
-
-    var questionList : List<Question> by rememberSaveable {
-        mutableStateOf(
-            listOf(
-                Question(1, "Kotlin doesn't work", 3, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."),
-                Question(2, "short question", 1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."),
-                Question(3, "A very very very very very very long question", 3, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."),
-            )
-        )
-    }
 
         Box {
             LazyColumn(
@@ -55,7 +49,9 @@ fun QuestionListScreen() {
                 contentPadding = PaddingValues(16.dp)
 
             ){
-
+                item {
+                    LinearProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                }
                 items(questionList){ question ->
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -90,17 +86,18 @@ fun QuestionListScreen() {
          //   LinearProgressIndicator(modifier = Modifier.align(Alignment.Center))
 
             UpdateWeatherButton(
-                updateQuestion = {
-                //    Thread.sleep(2000)
-                    questionList = listOf(
-                        Question(11, "Kotlin doesn't work", 33, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."),
-                        Question(22, "short question", 1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."),
-                        Question(33, "A very very very very very very long question", 3, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."),
-                    )
-                },
+                updateQuestion = questionsViewModel::updateQuestionsList,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 16.dp)
             )
         }
 }
+
+@Composable
+fun UpdateQuestionButton(updateQuestions: () -> Unit, modifier: Modifier) {
+    Button(
+        onClick = updateQuestions , modifier = modifier
+    ){
+        Text("Update Questions")
+    } }
