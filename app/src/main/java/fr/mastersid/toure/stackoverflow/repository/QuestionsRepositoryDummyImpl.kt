@@ -5,8 +5,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
-class QuestionsRepositoryDummyImpl @Inject constructor(
-) : QuestionsRepository{
+class QuestionsRepositoryDummyImpl @Inject constructor() : QuestionsRepository{
     override val questionsResponse: MutableStateFlow<QuestionsResponse> = MutableStateFlow(
         QuestionsResponse.Success(emptyList())
     )

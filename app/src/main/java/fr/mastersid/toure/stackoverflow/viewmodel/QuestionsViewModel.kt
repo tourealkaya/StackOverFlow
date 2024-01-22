@@ -4,13 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.mastersid.toure.stackoverflow.repository.QuestionsRepository
 import fr.mastersid.toure.stackoverflow.repository.QuestionsResponse
 import fr.mastersid.toure.stackoverflow.ui.Question
-import hilt_aggregated_deps._fr_mastersid_toure_stackoverflow_repository_QuestionRepositoryModule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+@HiltViewModel
 
 class QuestionsViewModel @Inject constructor(
     private val questionsRepository: QuestionsRepository
@@ -29,12 +30,12 @@ class QuestionsViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO){
             questionsRepository.questionsResponse.collect{ response ->
                 when(response){
-                    is QuestionsResponse.Pending -> {
-                        _isLoading.postValue(true)
-                    }
+                    is QuestionsResponse.Pending ->  _isLoading.postValue(true)
+
                     is QuestionsResponse.Success -> {
                         _isLoading.postValue(false)
                         _questionsList.postValue(response.list)
+
                     }
                 }
 

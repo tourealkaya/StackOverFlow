@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import fr.mastersid.toure.stackoverflow.R
-import fr.mastersid.toure.stackoverflow.composables.UpdateWeatherButton
 import fr.mastersid.toure.stackoverflow.ui.Question
 import fr.mastersid.toure.stackoverflow.viewmodel.QuestionsViewModel
 
@@ -39,7 +38,6 @@ import fr.mastersid.toure.stackoverflow.viewmodel.QuestionsViewModel
 fun QuestionListScreen(questionsViewModel: QuestionsViewModel = viewModel()) {
     val questionList by questionsViewModel.questionsList.observeAsState(initial = emptyList())
     val isLoading by questionsViewModel.isLoading.observeAsState(initial = false)
-
 
         Box {
             LazyColumn(
@@ -49,8 +47,10 @@ fun QuestionListScreen(questionsViewModel: QuestionsViewModel = viewModel()) {
                 contentPadding = PaddingValues(16.dp)
 
             ){
+                if(isLoading)
                 item {
-                    LinearProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    LinearProgressIndicator(modifier = Modifier.align(Alignment.Center)
+                        .fillMaxSize(),)
                 }
                 items(questionList){ question ->
                     Row(
@@ -83,10 +83,9 @@ fun QuestionListScreen(questionsViewModel: QuestionsViewModel = viewModel()) {
                     }
                 }
             }
-         //   LinearProgressIndicator(modifier = Modifier.align(Alignment.Center))
 
-            UpdateWeatherButton(
-                updateQuestion = questionsViewModel::updateQuestionsList,
+            UpdateQuestionButton(
+                updateQuestions = questionsViewModel::updateQuestionsList,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 16.dp)

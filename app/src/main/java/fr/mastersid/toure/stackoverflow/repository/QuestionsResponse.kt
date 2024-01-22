@@ -5,5 +5,6 @@ import fr.mastersid.toure.stackoverflow.ui.Question
 sealed interface QuestionsResponse {
     object Pending : QuestionsResponse
     @JvmInline
-    value class Success(val list : List<Question>): QuestionsResponse
+    value class Success(val list : List<Question>):
+        QuestionsResponse
 }
