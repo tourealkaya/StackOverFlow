@@ -5,8 +5,9 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface QuestionsWebService {
-    @GET("questions?pagesize=20")
-    fun getQuestionsList(
+    @GET("questions")
+    suspend fun getQuestionsList(
+        @Query("pagesize") pagesize: Int = 20,
         @Query("order") order: String = "desc",
         @Query("sort") sort: String = "activity",
         @Query("site") site: String = "stackoverflow"

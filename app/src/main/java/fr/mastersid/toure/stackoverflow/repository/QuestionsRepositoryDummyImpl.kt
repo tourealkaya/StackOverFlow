@@ -32,6 +32,7 @@ class QuestionsRepositoryDummyImpl @Inject constructor(
     }*/
 
     override suspend fun updateuestionsInfo(){
+     //   questionsResponse.emit(QuestionsResponse.Pending)
         val list = questionsWebService
             .getQuestionsList( order = "desc", sort = "activity", site = "stackoverflow")
         Log.d("Web service", "list: $list")
