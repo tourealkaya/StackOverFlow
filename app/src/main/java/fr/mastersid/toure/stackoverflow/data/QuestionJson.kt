@@ -7,6 +7,5 @@ data class ListQuestionJson(
 data class QuestionJson(
     val question_id: Int,
     val title: String,
-   // val body: String?,
     val answer_count: Int
 )

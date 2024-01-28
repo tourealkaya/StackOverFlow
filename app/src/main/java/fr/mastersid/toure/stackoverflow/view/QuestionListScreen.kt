@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -64,14 +65,8 @@ fun QuestionListScreen(questionsViewModel: QuestionsViewModel = viewModel()) {
                         ) {
                             Text(
                                 text = question.title,
-                                style = MaterialTheme.typography.displaySmall,
+                                style = MaterialTheme.typography.,
                                 maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                            Text(
-                                text = question.body,
-                                style = MaterialTheme.typography.bodyMedium.copy(fontSize = 16.sp),
-                                maxLines = 2,
                                 overflow = TextOverflow.Ellipsis
                             )
                         }
@@ -82,14 +77,20 @@ fun QuestionListScreen(questionsViewModel: QuestionsViewModel = viewModel()) {
                         )
                     }
                 }
-            }
 
+                item {
+                    Spacer(modifier = Modifier.height(64.dp))
+                }
+
+            }
             UpdateQuestionButton(
                 updateQuestions = questionsViewModel::updateQuestionsList,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 16.dp)
             )
+
+
         }
 }
 
