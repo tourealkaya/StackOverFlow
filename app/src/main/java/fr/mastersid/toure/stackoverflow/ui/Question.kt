@@ -1,14 +1,15 @@
 package fr.mastersid.toure.stackoverflow.ui
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
-
+@Entity(tableName = "question_table")
 @Parcelize
 data class Question(
-    //Ajoutez une propri ́et ́e ≪ body ≫ `a la data class Question, permettant d’afficher le d ́ebut du corps de la question.
-    val id: Int,
+    @PrimaryKey val id: Int,
     val title: String,
     val answerCount: Int,
-  
+
 
     ):Parcelable

@@ -65,7 +65,7 @@ fun QuestionListScreen(questionsViewModel: QuestionsViewModel = viewModel()) {
                         ) {
                             Text(
                                 text = question.title,
-                                style = MaterialTheme.typography.,
+                                style = MaterialTheme.typography.displaySmall,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
