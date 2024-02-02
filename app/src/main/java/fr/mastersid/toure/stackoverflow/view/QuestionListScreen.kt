@@ -17,7 +17,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -39,6 +41,7 @@ import fr.mastersid.toure.stackoverflow.viewmodel.QuestionsViewModel
 fun QuestionListScreen(questionsViewModel: QuestionsViewModel = viewModel()) {
     val questionList by questionsViewModel.questionsList.observeAsState(initial = emptyList())
     val isLoading by questionsViewModel.isLoading.observeAsState(initial = false)
+    val error by questionsViewModel.error.observeAsState()
 
         Box {
             LazyColumn(
@@ -89,6 +92,17 @@ fun QuestionListScreen(questionsViewModel: QuestionsViewModel = viewModel()) {
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 16.dp)
             )
+            error?.let {
+                Snackbar(
+                    modifier = Modifier.align(Alignment.BottomCenter),
+                    content = {
+                        Text(text = it)
+                        TextButton(onClick = { questionsViewModel.clearError() }) {
+                            Text(text = "Dismiss")
+                        }
+                    }
+                )
+            }
 
 
         }

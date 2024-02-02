@@ -26,6 +26,9 @@ class QuestionsViewModel @Inject constructor(
     private val _isLoading = MutableLiveData<Boolean>(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String> = _error
+
     init {
         viewModelScope.launch(Dispatchers.IO){
             questionsRepository.questionsResponse.collect{ response ->
@@ -37,6 +40,11 @@ class QuestionsViewModel @Inject constructor(
                         _questionsList.postValue(response.list)
 
                     }
+
+                    is QuestionsResponse.Error -> {
+                        _isLoading.postValue(false)
+                        _error.postValue(response.message)
+                    }
                 }
 
             }
@@ -47,6 +55,9 @@ class QuestionsViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO){
             questionsRepository.updateuestionsInfo()
         }
+    }
+    fun clearError() {
+        _error.value = null
     }
 
 }
