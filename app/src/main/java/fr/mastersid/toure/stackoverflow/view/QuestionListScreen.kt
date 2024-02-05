@@ -11,10 +11,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Snackbar
@@ -77,6 +82,12 @@ fun QuestionListScreen(questionsViewModel: QuestionsViewModel = viewModel()) {
                         Text(
                             text = stringResource(id = R.string.answer_count, question.answerCount),
                             style = MaterialTheme.typography.displaySmall
+                        )
+                        Spacer(modifier = Modifier.width(16.dp))
+
+                        Icon(
+                            imageVector = Icons.Default.Send,
+                            contentDescription = null,
                         )
                     }
                 }
